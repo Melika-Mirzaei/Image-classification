@@ -1,48 +1,73 @@
-# Superpixel and Keypoint Analysis
+# Image Feature Extraction and Classification
 
-This repository contains Python code for analyzing images using superpixels and keypoints. The goal is to extract relevant features from images and create a graph-based representation.
+This repository contains Python code for extracting features from grayscale images, creating graphs based on those features, and applying machine learning classifiers for image categorization. The project focuses on two main strategies: superpixel-based analysis and keypoint-based analysis.
 
 ## Strategies
 
-1. **Superpixel Extraction (Strategy 1):**
-   - Superpixels are obtained using the SLIC algorithm.
-   - The input image is converted to RGB.
-   - The number of superpixels is set to 100, and compactness is set to 10.
-   - The resulting superpixels are stored in an array, along with the total count.
+### 1. Superpixel Extraction (Strategy 1)
 
-2. **Keypoint Extraction (Strategy 2):**
-   - Keypoints are detected using the SIFT (Scale-Invariant Feature Transform) algorithm.
-   - The number of keypoints is calculated.
+- **Description**: Superpixels are extracted using the SLIC (Simple Linear Iterative Clustering) algorithm.
+- **Steps**:
+    - Convert the grayscale image to RGB format.
+    - Use SLIC to segment the image into regions based on color similarity.
+    - Calculate the number of superpixels.
+- **Code Snippet**:
+    ```python
+    # Example usage
+    segments, num_superpixels = extract_superpixels(image)
+    ```
 
-## Coordinate Calculation
+### 2. Keypoint Extraction (Strategy 2)
 
-1. **Superpixel Coordinates (Strategy 1):**
-   - For each superpixel, the centroid coordinates (x, y) are computed.
-   - The mean intensity of each superpixel is also recorded.
-
-2. **Keypoint Coordinates (Strategy 2):**
-   - For each keypoint, the (x, y) coordinates are extracted.
-   - The intensity value at each keypoint location is stored.
+- **Description**: Keypoints are detected using OpenCV's SIFT (Scale-Invariant Feature Transform) algorithm.
+- **Steps**:
+    - Detect keypoints in the grayscale image.
+    - Calculate the number of keypoints.
+- **Code Snippet**:
+    ```python
+    # Example usage
+    keypoints, num_keypoints = extract_keypoints(image)
+    ```
 
 ## Graph Creation
 
-1. **Edge-Based Graph (Strategy 1):**
-   - Nodes represent superpixel centroids.
-   - Edges connect nodes if the Euclidean distance between centroids is below a specified threshold.
-
-2. **Intensity-Based Graph (Strategy 2):**
-   - Nodes represent keypoints.
-   - Edges connect nodes if the absolute intensity difference between keypoints is below a threshold.
+- Two types of graphs are constructed based on extracted features:
+    1. **Edge-Weighted Graphs** (Strategy 1 and 2):
+        - Nodes represent superpixels or keypoints.
+        - Edges are added if the distance between nodes is below a specified threshold.
+    2. **Intensity-Weighted Graphs** (Strategy 1 and 2):
+        - Nodes represent superpixels or keypoints.
+        - Edges are added if the intensity difference between nodes is below a specified threshold.
 
 ## Network Properties
 
-- Degree centrality, closeness centrality, average neighbor degree, betweenness centrality, and PageRank are computed for the created graph.
+- Various network properties are extracted from the created graphs:
+    - Degree centrality
+    - Closeness centrality
+    - Average neighbor degree
+    - Betweenness centrality
+    - PageRank
+
+## Machine Learning Classification
+
+- The extracted features are used for image classification.
+- Various classifiers are evaluated:
+    - Decision Tree
+    - Random Forest
+    - K-Nearest Neighbor
+    - Bagging
+    - Boosting
+    - Naive Bayes
+    - SVM
+    - Logistic Regression
+    - SGD
+    - Voting Ensemble
 
 ## Usage
 
-1. Install the required Python packages:
-   ```
-   pip install opencv-python numpy networkx scikit-image matplotlib pandas scikit-learn category-encoders
-   ```
+1. Ensure you have the necessary Python libraries installed (e.g., OpenCV, scikit-learn).
+2. Organize your grayscale images in a folder.
+3. Update the `folder_path` variable in the code snippet.
+4. Run the script to extract features, create graphs, and evaluate classifiers.
 
-2. Run the provided code to extract superpixels, keypoints, and create graphs.
+Feel free to explore and adapt this code for your specific image analysis tasks!
